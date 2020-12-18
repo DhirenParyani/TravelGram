@@ -9,12 +9,13 @@ import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handl
 
 
 const Profile = ({monitorCurrentPostLikeStatus,followingUsers,followersDataLoading,userDataLoading,currentUser, posts, navigation, route, fetchUser, fetchUserPost, changeFollowingStatus, onFollow, onUnFollow, following }) => {
+    const backupImage = useState('https://firebase.google.com/downloads/brand-guidelines/PNG/logo-logomark.png')
     const[refreshing,setRefreshing]=useState(false)
     const onRefresh=useCallback(()=>{
         const fetchData = async () => {
 
-            await fetchUser(auth().currentUser.uid);
-            await fetchUserPost(auth().currentUser.uid);
+            await fetchUser((auth().currentUser)?auth().currentUser.uid:"");
+            await fetchUserPost((auth().currentUser)?auth().currentUser.uid:"");
             
     
         }
@@ -47,7 +48,7 @@ const Profile = ({monitorCurrentPostLikeStatus,followingUsers,followersDataLoadi
         <View style={styles.container}>
             <View style={{ padding: 20, flexDirection: "row" }}>
                 <View style={styles.profileImage}>
-                    <Thumbnail large source={{ uri: currentUser.image }} />
+                    <Thumbnail large source={{ uri:(currentUser!=null && currentUser.hasOwnProperty('image'))?currentUser.image:backupImage}} />
                 </View>
                 <View
                     style={{
@@ -73,13 +74,13 @@ const Profile = ({monitorCurrentPostLikeStatus,followingUsers,followersDataLoadi
             </View>
             <View style={{marginLeft:20,marginBottom:10}}>
                 <View >
-                <Text >{currentUser.name}</Text>
+                <Text >{(auth() && currentUser.hasOwnProperty('name'))?currentUser.name:""}</Text>
                 </View>
                 <View>
-                <Text>{currentUser.country}</Text>
+                <Text>{(auth() && currentUser.hasOwnProperty('country'))?currentUser.country:""}</Text>
                 </View>
                 <View>
-                <Text>{currentUser.bio}</Text>
+                <Text>{(auth() && currentUser.hasOwnProperty('bio'))?currentUser.bio:""}</Text>
                 </View>
             </View>
             {

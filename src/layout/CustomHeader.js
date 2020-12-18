@@ -35,11 +35,9 @@ const CustomHeader = ({clearData,signOut, authState,navigation}) =>{
                   iconLeft
                      
                       onPress={() => {
-                          clearData()
-                          signOut().then(
-                              ()=>  clearData()
-                          )
-                          //navigation.replace("SignIn")
+                          
+                          signOut()
+                          
                         }}>
                           <Icon name="log-out-outline" style={{color:"red"}}></Icon>
                       </Button>

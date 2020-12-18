@@ -14,8 +14,11 @@ import Welcome from '../assets/undraw_welcome_cats_thqn.png'
 import {connect} from 'react-redux'
 import {signIn} from '../action/auth' 
 import propTypes from 'prop-types'
+import Snackbar from 'react-native-snackbar';
 
 const SignIn = ({navigation,signIn}) => { 
+
+    
     const [email,setEmail]=useState('')
     const [password,setPassword]=useState('')
     const doSignIn = () => {
@@ -24,7 +27,7 @@ const SignIn = ({navigation,signIn}) => {
       if(email.length==0||password.length==0)
       {
           Snackbar.show({
-          text: "Missing email address Or password",
+          text: "Missing email address or password",
           textColor: 'white',
           backgroundColor: 'red'
         })
@@ -42,7 +45,7 @@ const SignIn = ({navigation,signIn}) => {
 
     return (
         <Container style={styles.container}>
-          <ScrollView contentContainerStyle={{flexGrow: 1}}>
+          <ScrollView contentContainerStyle={{flexGrow: 1}} keyboardShouldPersistTaps='handled'>
             <H3 style={styles.heading}>Welcome to the Travel-gram App</H3>
     
             <Image

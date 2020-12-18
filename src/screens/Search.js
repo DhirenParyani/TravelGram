@@ -34,7 +34,7 @@ const Search = ({searchUser,users,navigation}) => {
                         onPress={()=>{
                                  navigation.navigate('Profile',{userId:item.id})
                         }}>
-                        <Text style={styles.item}>{item.name}</Text>
+                        <Text style={styles.item}>{item.userName}</Text>
                     </TouchableOpacity>
 
                 )}

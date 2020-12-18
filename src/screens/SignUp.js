@@ -15,6 +15,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage'
 import ProgressBar from 'react-native-progress/Bar'
 import firestore from '@react-native-firebase/firestore'
+import auth from '@react-native-firebase/auth'
 //redux
 import propTypes from 'prop-types'
 import { signUp } from '../action/auth'
@@ -38,22 +39,28 @@ const SignUp = ({ signUp }) => {
   ];
   const chooseImage = async () => {
     ImagePicker.openPicker({
-      width: 40,
-      height: 40,
+      width: 80,
+      height: 80,
       cropping: true
     }).then(uploadedImage => {
 
       setImage(uploadedImage.path)
       uploadImage(uploadedImage.path);
 
-    });
+    }).catch(error=>
+      Snackbar.show({
+        text: "Sorry, there was an issue attempting to get the image you selected. Please try again",
+        textColor: "white",
+        backgroundColor: "red"
+      })
+    )
   }
-  const uploadImage = async (image) => {
-    const uploadUri = image
+  const uploadImage = async (imageURL) => {
+    const uploadUri = imageURL
     const filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
     try {
       setUploadStatus(0)
-      const path = `post/${auth().currentUser.uid}/${filename}`
+      const path = `profile/${filename}`
       const reference = storage().ref().child(path)
       const task = reference.putFile(uploadUri)
 
@@ -65,7 +72,7 @@ const SignUp = ({ signUp }) => {
 
       const taskCompleted = () => {
         reference.getDownloadURL().then((snapshot) => {
-          savePost(snapshot);
+          setImage(snapshot);
           setImageUploading(false)
         })
       }
@@ -82,6 +89,7 @@ const SignUp = ({ signUp }) => {
   }
 
   const doSignUp = async () => {
+   
     if (name.length == 0 || email.length == 0 || password.length == 0 || userName.length == 0) {
       let message=""
       let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -98,10 +106,15 @@ const SignUp = ({ signUp }) => {
       {
         message+="Password should be greater than 6 characters"+" "+","
       }
+      if(userName.length==0)
+      {
+        message+="Missing username"+","
+      }
       if(emailRegex.test(email)===false)
       {
         message+="Email address is invalid"+","
       }
+      
 
       Snackbar.show({
         text: message.substring(0,message.length-1).trim(),
@@ -110,6 +123,7 @@ const SignUp = ({ signUp }) => {
       })
     }
     else {
+     
       firestore().collection("users")
         .where("userName", '==', userName)
         .get()

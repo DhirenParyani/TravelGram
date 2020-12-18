@@ -1,4 +1,4 @@
-import {READ_COMMENTS,SIGN_OUT} from '../action/action.types'
+import {READ_COMMENTS} from '../action/action.types'
 
 const initialState={
     comments:[]

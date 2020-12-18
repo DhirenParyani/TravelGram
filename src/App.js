@@ -33,8 +33,8 @@ const App = ({ navigation,authState}) => {
         type: IS_AUTHENTICATED,
         payload: true
       })
-      console.log(user._user.uid)
-      //fetchUser();
+      
+      
 
     }
     else {

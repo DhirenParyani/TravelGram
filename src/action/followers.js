@@ -3,7 +3,7 @@ import firestore from '@react-native-firebase/firestore'
 import { FOLLOWERS_DATA_LOADING_STATE_CHANGE, FOLLOWERS_POST_STATE_CHANGE, FOLLOWERS_DATA_STATE_CHANGE, FOLLOWERS_STATE_CHANGE, FOLLOWERS_LIKES_STATE_CHANGE, CLEAR_DATA, CLEAR_FEEDS_DATA } from './action.types'
 
 
-let profilesScanned = 0; let profilesToBeScanned = 0;
+let profilesScanned = 0; 
 export const fetchFollowers = () => async (dispatch) => {
 
     try {

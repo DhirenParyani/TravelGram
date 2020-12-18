@@ -1,8 +1,5 @@
-//empty state forwarding guy
 import {SET_USER,IS_AUTHENTICATED,CLEAR_DATA} from '../action/action.types'
 
-//we won't be setting anything that can validate the authentication
-//we will use useDispatch for doing so
 
 const initialState={
     user:null,
@@ -11,7 +8,7 @@ const initialState={
 };
 
 export default (state=initialState,action) =>{
-    //We do things based on actionType
+   
     switch(action.type){
     
         case SET_USER:

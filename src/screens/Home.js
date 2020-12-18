@@ -11,19 +11,18 @@ import AddPost from './AddPost';
 import Profile from './Profile'
 import Feeds from './Feeds'
 import Search from './Search'
-import { FOLLOWERS_DATA_LOADING_STATE_CHANGE } from '../action/action.types'
 
 
 const Tab = createMaterialBottomTabNavigator()
 
-const Home = ({ feed, followingUsers, followersDataLoading, userDataLoading, clearData, fetchFollowers, fetchUser, fetchUserPost, currentUser, posts }) => {
+const Home = ({clearData, fetchFollowers, fetchUser, fetchUserPost, currentUser, posts }) => {
    
 
     useEffect(() => {
        
         clearData()
-        fetchUser(auth().currentUser.uid);
-        fetchUserPost(auth().currentUser.uid);
+        fetchUser((auth().currentUser)?auth().currentUser.uid:"");
+        fetchUserPost((auth().currentUser)?auth().currentUser.uid:"");
         fetchFollowers();
       
     }, [])

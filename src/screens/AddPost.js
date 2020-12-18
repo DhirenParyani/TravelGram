@@ -1,4 +1,3 @@
-//import firebase from 'react-native-firebase'
 import React, { useState } from 'react'
 
 import { StyleSheet, ScrollView, Image, Platform,View,FlatList } from 'react-native'
@@ -22,16 +21,12 @@ import firestore from '@react-native-firebase/firestore'
 import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage'
 import auth from '@react-native-firebase/auth'
-import { ListItem, Avatar } from 'react-native-elements'
 
-
-import { options } from '../utils/options'
 
 
 //redux
 import { connect } from 'react-redux'
 import propTypes from 'prop-types'
-import shortid from 'shortid'
 
 
 
@@ -50,8 +45,7 @@ const AddPost = ({ navigation, userState }) => {
     ImagePicker.openPicker({
       width: 300,
       height: 400,
-      cropping: true
-    }).then(uploadedImage => {
+      }).then(uploadedImage => {
      
       setImage(uploadedImage.path)
       
@@ -69,7 +63,7 @@ const AddPost = ({ navigation, userState }) => {
     const filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
     try {
       setUploadStatus(0)
-      const path = `post/${auth().currentUser.uid}/${filename}`
+      const path = `post/${(auth().currentUser)?auth().currentUser.uid:""}/${filename}`
       const reference = storage().ref().child(path)
       const task = reference.putFile(uploadUri)
 
@@ -113,7 +107,7 @@ const AddPost = ({ navigation, userState }) => {
 
 
       firestore().collection('posts')
-        .doc(auth().currentUser.uid)
+        .doc((auth().currentUser)?auth().currentUser.uid:"")
         .collection("userPosts")
         .add({
           location,

@@ -1,20 +1,20 @@
-import auth, { firebase } from '@react-native-firebase/auth'
+import auth from '@react-native-firebase/auth'
 import Snackbar from 'react-native-snackbar';
 import firestore from '@react-native-firebase/firestore'
-import { SIGN_OUT } from './action.types';
+import { CLEAR_DATA, SIGN_OUT } from './action.types';
 
 
 
 
 export const signUp = (data) => async (dispatch) => {
 
-    console.log(data);
+    
     const { name, userName, bio, email, password, country, image } = data
     auth().createUserWithEmailAndPassword(email, password)
         .then((data) => {
             
             firestore().collection("users")
-                .doc(firebase.auth().currentUser.uid)
+                .doc(auth().currentUser.uid)
                 .set({
                     name,
                     userName,
@@ -43,7 +43,7 @@ export const signUp = (data) => async (dispatch) => {
 
 
 export const signIn = (data) => async (dispatch) => {
-    console.log(data);
+    
     const { email, password } = data
     auth()
         .signInWithEmailAndPassword(email, password)
@@ -68,12 +68,14 @@ export const signIn = (data) => async (dispatch) => {
 export const signOut = () =>  (dispatch) => {
     auth().signOut()
         .then(() => {
+           
             console.log("Signout Success");
             Snackbar.show({
                 text: "SignOut success!",
                 textColor: "white",
                 backgroundColor: "#1b262c"
             })
+            
            
         })
         .catch((error) => {

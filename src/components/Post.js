@@ -12,15 +12,13 @@ import {
   Right,
 } from 'native-base';
 import firestore from '@react-native-firebase/firestore'
-//import {onLike,onUnLike} from '../action/likes'
+
 import auth from '@react-native-firebase/auth'
 import EmptyContainer from './EmptyContainer';
-import {connect} from 'react-redux'
-import { useGestureHandlerRef } from '@react-navigation/stack';
 
 const Post = ({item,user,navigation,showBottomTab}) =>{
   const onLike = (userId, postId) => {
-    console.log(item,user,userId,postId)
+    
     firestore()
         .collection("posts")
         .doc(userId)
@@ -68,7 +66,7 @@ const Post = ({item,user,navigation,showBottomTab}) =>{
               style={{
                 color: '#fdcb9e',
               }}>
-              {((user!==undefined && user.hasOwnProperty('name')))?user.name:""}
+              {((user!==undefined && user.hasOwnProperty('userName')))?user.userName:""}
             </Text>
 
             <Text note>{item.location}</Text>
