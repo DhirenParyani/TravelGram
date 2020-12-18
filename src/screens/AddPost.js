@@ -237,7 +237,7 @@ const styles = StyleSheet.create({
   },
   icon: { fontSize: 20, color: '#fdcb9e' },
   image: { width: null, height: 150, marginVertical: 15 },
-  progress: { width: null, marginBottom: 19 },
+  progress: { width: null, marginBottom: 20 },
 });
 
 
